@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeCart = (event) => {
         const target = event.target;
     
-        if (target === cart || target.classList.contains('cart-close' || event.keyCode === 27)) {
+        if (target === cart || target.classList.contains('cart-close') || event.keyCode === 27 ) {
             event.preventDefault();
             cart.style.display = '';
             document.removeEventListener('keydown', closeCart);

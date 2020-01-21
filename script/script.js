@@ -26,8 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             </div>
                         </div>`;
 
-       return card;  
-    
+        return card;
+
     };
 
     goodsWrapper.append(createCardGoods(1, 'Дартс', 2000, 'img/temp/Archer.jpg'));
@@ -36,26 +36,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const closeCart = (event) => {
         const target = event.target;
-    
-        if (target === cart || target.classList.contains('cart-close') || event.keyCode === 27 ) {
-            event.preventDefault();
+
+        if (target === cart ||
+            target.classList.contains('cart-close') ||
+            event.keyCode === 27) {
             cart.style.display = '';
             document.removeEventListener('keydown', closeCart);
         }
-    
+
     };
-    
+
     const openCart = () => {
+        event.preventDefault();
         cart.style.display = 'flex';
         document.addEventListener('keydown', closeCart);
     };
 
+    
     cartBtn.addEventListener('click', openCart);
     cart.addEventListener('click', closeCart);
-      
-      
+
+
 
 
 });
-
-

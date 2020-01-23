@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const wishlistBtn = document.getElementById('wishlist');
     const goodsWrapper = document.querySelector('.goods-wrapper');
     const cart = document.querySelector('.cart');
+    const category = document.querySelector('.category');
 
 
     const createCardGoods = (id, title, price, img) => {
@@ -30,10 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     };
 
-    goodsWrapper.append(createCardGoods(1, 'Дартс', 2000, 'img/temp/Archer.jpg'));
-    goodsWrapper.append(createCardGoods(2, 'Фламинго', 3000, 'img/temp/Flamingo.jpg'));
-    goodsWrapper.append(createCardGoods(3, 'Носки', 333, 'img/temp/Socks.jpg'));
-
+    
     const closeCart = (event) => {
         const target = event.target;
 
@@ -43,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
             cart.style.display = '';
             document.removeEventListener('keydown', closeCart);
         }
-
     };
 
     const openCart = () => {
@@ -53,9 +50,39 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     
+    const renderCard = goods => {
+        goodsWrapper.textContent = '';
+        goods.forEach(({ id, title, price, imgMin }) => {
+            goodsWrapper.append(createCardGoods(id, title, price, imgMin));
+        });
+    };
+  
+    
+    const getGoods = (handler, filter) => {
+        fetch('db/db.json')
+            .then(response => response.json())
+            .then(filter)
+            .then(handler);
+    };
+    
+    
+    const randomSort = goods => goods.sort(() => Math.random() - 0.5);
+
+    const choiceCategory = () => {
+        event.preventDefault();
+        const target = event.target;
+
+        if (target.classList.contains('category-item')) {
+            const cat = target.dataset.category;
+            getGoods(renderCard, goods => goods.filter(item =>  item.category.includes(cat)));
+        }
+    };
+
     cartBtn.addEventListener('click', openCart);
     cart.addEventListener('click', closeCart);
+    category.addEventListener('click', choiceCategory);
 
+    getGoods(renderCard, randomSort);
 
 
 

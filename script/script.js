@@ -7,6 +7,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const cart = document.querySelector('.cart');
     const category = document.querySelector('.category');
 
+    const loading = () => {
+        goodsWrapper.innerHTML = `<div id="spinner"><div class="spinner-loading">
+        <div><div><div></div>
+        </div><div><div></div></div>
+        <div><div></div></div><div>
+        <div></div></div></div></div></div`;
+    };
+
 
     const createCardGoods = (id, title, price, img) => {
         const card = document.createElement('div');
@@ -59,7 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
   
     
     const getGoods = (handler, filter) => {
-        fetch('db/db.json')
+        loading();
+        fetch('./db/db.json')
             .then(response => response.json())
             .then(filter)
             .then(handler);
